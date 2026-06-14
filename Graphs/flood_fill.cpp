@@ -8,7 +8,7 @@ const std::vector<std::vector<int>> directions{
     {0, -1}
 };
 
-void dfs(int node, std::vector<std::vector<int>>& image, int * visited, int color){
+void dfs(int node, std::vector<std::vector<int>>& image, int * visited, int color, int target){
             visited[node] = 1;
 
             int cols = image[0].size();
@@ -28,7 +28,7 @@ void dfs(int node, std::vector<std::vector<int>>& image, int * visited, int colo
                     int new_node = new_r * cols + new_c;
                     
                     if(!visited[new_node]){
-                        dfs(new_node, image, visited, color);
+                        dfs(new_node, image, visited, color, target);
                     }
                 }
             }
@@ -49,7 +49,7 @@ int main(){
         int sc = 1;
         int color = 2;
 
-        dfs(image[0].size() * sr + sc, image, visited, color);
+        dfs(image[0].size() * sr + sc, image, visited, color, image[sr][sc]);
 
         for(int i = 0; i < image.size(); i++){
             for(int j = 0; j < image[0].size(); j++){

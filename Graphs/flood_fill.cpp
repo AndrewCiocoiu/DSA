@@ -23,7 +23,7 @@ void dfs(int node, std::vector<std::vector<int>>& image, int * visited, int colo
                 int new_r = r + dir[0];
                 int new_c = c + dir[1];
 
-                if (new_r >= 0 && new_r < rows && new_c >= 0 && new_c < cols && image[new_r][new_c] != 0) {
+                if (new_r >= 0 && new_r < rows && new_c >= 0 && new_c < cols && image[new_r][new_c] == target) {
                     
                     int new_node = new_r * cols + new_c;
                     

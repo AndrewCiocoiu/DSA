@@ -22,7 +22,7 @@ vector<int> countBits(int n) {
 }
 
 int main(){
-    int n = 2;
+    int n = 5;
     countBits(n);
     print("{}\n", countBits(n));
 }

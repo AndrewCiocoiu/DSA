@@ -2,7 +2,6 @@
 #include <vector>
 #include <queue>
 
-
 using namespace std;
 
 int BFS(vector<vector<int>> &grid, int r, int c){

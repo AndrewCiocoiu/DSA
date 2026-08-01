@@ -8,7 +8,7 @@ int longestConsecutive(vector<int>& nums) {
 
         int max_seq = 0;
 
-        for(auto const & num : nums){
+        for(auto const & num : n){
             int curr_seq = 1;
             if(!n.count(num - 1)){
                 int i = num;

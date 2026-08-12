@@ -1,17 +1,13 @@
-def find_str(s, wordDict):
-    for w in wordDict:
-        idx = s.find(w)
-        if idx != -1:
-            return (idx, len(w))
-    return -1
-
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        while(find_str(s, wordDict) != -1):
-            idx = find_str(s, wordDict)
-            s = s[:idx[0]] + s[idx[0] + idx[1]:]
+        dp = [False] * (len(s) + 1)
+        dp[len(s)] = True
+
+        for i in range(len(s) - 1, -1, -1):
+            for w in wordDict:
+                if i + len(w) <= len(s) and s[i:i + len(w)] == w:
+                    dp[i] = dp[i + len(w)]
+                if dp[i]:
+                    break
         
-        if s != "":
-            return False
-        else:
-            return True
+        return dp[0]

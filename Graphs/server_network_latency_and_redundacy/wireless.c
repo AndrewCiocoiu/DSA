@@ -12,7 +12,10 @@ typedef struct EDGE{
 int parent[100001]; 
 
 int find(int i) {
-    return (parent[i] == i) ? i : (parent[i] = find(parent[i]));
+    if(parent[i] == i){
+        return i;
+    }
+    return find(parent[i]);
 }
 
 int sort_by_weight(const void * a, const void * b){

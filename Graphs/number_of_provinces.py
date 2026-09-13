@@ -4,13 +4,15 @@ class Solution:
         
         def DFS(start):
             st = [start]
+            visited.add(start)
 
             while st:
                 node = st.pop()
-                visited.add(node)
+                
 
                 for i in range(len(isConnected)):
                     if isConnected[node][i] == 1 and i not in visited:
+                        visited.add(i)
                         st.append(i)
         
         count = 0

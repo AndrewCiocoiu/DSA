@@ -6,10 +6,6 @@
 #         self.right = right
 
 class Solution:
-    def find_height(self, root):
-        if not root:
-            return 0
-        return 1 + max(self.find_height(root.left), self.find_height(root.right))
 
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         max_sum = 0
@@ -18,14 +14,17 @@ class Solution:
             nonlocal max_sum
 
             if not root:
-                return
-            DFS(root.left)
-            DFS(root.right)
-            diam = self.find_height(root.left) + self.find_height(root.right)
+                return 0
+            
+            left_side = DFS(root.left)
+            right_side  = DFS(root.right)
 
-            if diam > max_sum:
-                max_sum = diam
-        
+            curr_sum = left_side + right_side
+            if curr_sum > max_sum:
+                max_sum = curr_sum
+            
+            return 1 + max(left_side, right_side)
+
         DFS(root)
         
         return max_sum

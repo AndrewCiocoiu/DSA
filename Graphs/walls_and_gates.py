@@ -1,3 +1,5 @@
+from collections import deque
+
 INF = 2**31 - 1
 
 

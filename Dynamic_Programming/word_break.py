@@ -1,13 +1,20 @@
+from functools import cache
+
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        dp = [False] * (len(s) + 1)
-        dp[len(s)] = True
+        words = set(wordDict)
 
-        for i in range(len(s) - 1, -1, -1):
-            for w in wordDict:
-                if i + len(w) <= len(s) and s[i:i + len(w)] == w:
-                    dp[i] = dp[i + len(w)]
-                if dp[i]:
-                    break
+        @cache
+        def DFS(i):
+            n = len(s)
+
+            if i == len(s):
+                return True
+            
+            for j in range(i + 1, n + 1):
+                if s[i:j] in words and DFS(j):
+                    return True
+            
+            return False
         
-        return dp[0]
+        return DFS(0)

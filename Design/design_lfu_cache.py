@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, key=0, value=0):
+    def __init__(self, key: int = 0, value: int = 0):
         self.key = key
         self.value = value
         self.frequency = 1
@@ -15,26 +15,26 @@ class DoublyLinkedList:
         self.tail.prev = self.head
         self._size = 0
 
-    def _add_to_head(self, node):
+    def add_to_head(self, node: Node) -> None:
         node.prev = self.head
         node.next = self.head.next
         self.head.next.prev = node
         self.head.next = node
         self._size += 1
 
-    def remove(self, node):
+    def remove(self, node: Node) -> None:
         node.prev.next = node.next
         node.next.prev = node.prev
         self._size -= 1
 
-    def pop_tail(self):
+    def pop_tail(self) -> Node:
         if self._size == 0:
             return None
         lru_node = self.tail.prev
         self.remove(lru_node)
         return lru_node
 
-    def __len__(self):
+    def __len__(self) -> int:
         return self._size
 
 
@@ -42,10 +42,10 @@ class LFUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.min_freq = 0
-        self.key_to_node = {}
-        self.freq_to_dll = {}
+        self.key_to_node = {}    
+        self.freq_to_dll = {}   
 
-    def _update_frequency(self, node):
+    def _update_frequency(self, node: Node) -> None:
         old_freq = node.frequency
         self.freq_to_dll[old_freq].remove(node)
 
@@ -58,7 +58,7 @@ class LFUCache:
         if new_freq not in self.freq_to_dll:
             self.freq_to_dll[new_freq] = DoublyLinkedList()
 
-        self.freq_to_dll[new_freq]._add_to_head(node)
+        self.freq_to_dll[new_freq].add_to_head(node)
 
     def get(self, key: int) -> int:
         if key not in self.key_to_node:
@@ -78,3 +78,13 @@ class LFUCache:
             self._update_frequency(node)
         else:
             if len(self.key_to_node) >= self.capacity:
+                evicted = self.freq_to_dll[self.min_freq].pop_tail()
+                del self.key_to_node[evicted.key]
+
+            new_node = Node(key, value)
+            self.key_to_node[key] = new_node
+            self.min_freq = 1
+
+            if 1 not in self.freq_to_dll:
+                self.freq_to_dll[1] = DoublyLinkedList()
+            self.freq_to_dll[1].add_to_head(new_node)
